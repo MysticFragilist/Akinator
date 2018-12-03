@@ -1,0 +1,10 @@
+0	R	Est-ce que ça vole?
+1	G	Est-ce un moyen de transport?
+2	G	A-t-il des ailes?
+3	G	Avion
+3	D	Hélicoptère
+2	D	Canard
+1	D	Est-ce qu'il jappe?
+2	G	Chien
+2	D	Est-ce qu'on peut le boire?
+3	G	Verre d'eau
