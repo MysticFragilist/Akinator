@@ -112,7 +112,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Node.cpp" />
     <ClCompile Include="UtilitairesES.cpp" />
   </ItemGroup>
   <ItemGroup>

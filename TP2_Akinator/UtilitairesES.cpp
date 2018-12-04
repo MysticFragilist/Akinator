@@ -47,3 +47,23 @@ float lireReel(const string& message, float limiteInferieure){
 	}
 	return nombre;
 }
+
+bool lireOouN(const string& message) {
+	string resp = "";
+	bool valide = false;
+	while (!valide) {
+		cout << message << " (O/N) ? ";
+		cin >> resp;
+
+		if (cin.fail() || (resp != "O" && resp != "N")) {
+			cerr << "Vous devez entrer une O pour oui ou N pour non." << endl;
+			valide = false;
+		}
+		else 
+		cin.clear();
+		cin.ignore(cin.rdbuf()->in_avail());
+	}
+
+
+	return resp == "O";
+}

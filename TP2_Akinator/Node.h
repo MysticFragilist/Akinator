@@ -1,8 +1,10 @@
 #pragma once
 #include "Tree.h"
-template<typename T> class Node {
 
-	friend class Tree;
+template<typename T>
+class Node {
+
+	template<typename T> friend class Tree;
 
 public:
 

@@ -5,27 +5,31 @@
 #include <Windows.h>
 
 #include "UtilitairesES.h"
+#include "Tree.h"
 
 void lireFichier(list<string> &listFichier);
 
 using namespace std;
 
 int main() {
-
+	Tree<string>* tree = new Tree<string>();
 	list<string> * listFichier = new list<string>();
 	lireFichier(*listFichier);
 	int choixPrincipale = 1;
 
+	setlocale(LC_ALL, "");
+
 	while (choixPrincipale != 0) {
 
-		choixPrincipale = lireEntier("1) Jouer une partie\n2) Quitter\nFaites votre choix", 0, 2);
+		choixPrincipale = lireEntier("1) Jouer une partie\n2) Quitter\nFaites votre choix", 1, 2);
 
 		switch (choixPrincipale) {
-		case 0:
-			return 0;
-			break;
 		case 1:
-
+			JeuQuestion();
+			break;
+		case 2:
+			tree.sauvegarde();
+			return 0;
 			break;
 		}
 		
