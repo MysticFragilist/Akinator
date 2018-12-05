@@ -2,11 +2,12 @@
 #include <fstream>
 #include <list>
 #include <string>
-#include <Windows.h>
+//#include <Windows.h>
 
 #include "UtilitairesES.h"
 #include "Tree.h"
 
+void JeuQuestion(Tree<string>& tree);
 void lireFichier(list<string> &listFichier);
 
 using namespace std;
@@ -25,10 +26,10 @@ int main() {
 
 		switch (choixPrincipale) {
 		case 1:
-			JeuQuestion();
+			JeuQuestion(*tree);
 			break;
 		case 2:
-			tree.sauvegarde();
+			tree->sauvegarde();
 			return 0;
 			break;
 		}
@@ -40,12 +41,18 @@ int main() {
 	return 0;
 }
 
-void JeuQuestion() {
+void JeuQuestion(Tree<string>& tree) {
+	bool isFinished = false;
+	tree.deplacerCurseurDebut();
 
+	while (isFinished) {
+		if(tree.curse)
+
+	}
 }
 
 /*
- * Lire le fichier afin de créer la liste
+ * Lire le fichier afin de creer la liste
  */
 void lireFichier(list<string> &listFichier) {
 	 ifstream fichier("liste.txt", ios::in);

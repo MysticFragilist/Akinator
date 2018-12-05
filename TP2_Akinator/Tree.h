@@ -6,10 +6,6 @@
 template<typename T> 
 class Tree {
 public:
-	enum TypeNaviguation {
-		prefixe, infixe, postfixe
-	};
-
 
 	/**
 	* An empty constructor which call the 
@@ -27,30 +23,15 @@ public:
 		root = cursor = new Node<T>(element);
 		size = 1;
 		nomFichier = "";
-		initializeRecur();
 	}
 
 	Tree& operator=(const Tree& tree) {
 		tree.moveCursorRoot();
+		cursor = root;
+
 
 	}
 
-
-	//needed to initialize when operator= is called
-	//or when copied constructor is called 
-	Node* initializeRecur(Noeud *n) {
-
-		Node* newNode = nullptr;
-
-		if (n != nullptr) {
-			newNode = new Node();
-
-			newNode->element = n->element;
-			newNode->leftNode = initializeRecu(n->leftNode);
-			newNode->rightNode = initializeRecu(n->rightNode);
-		}
-		return newNode;
-	}
 	/**
 	* A copied Constructor
 	*/
@@ -68,7 +49,8 @@ public:
 	}
 
 	void Construct(list<T> list) {
-		
+		//start the recursion
+		ConstructRecursif(root, 0,"R", list);
 	}
 
 
@@ -76,34 +58,31 @@ public:
 		
 	}
 
-	void AddLeftElementCursor(const T elem) {
-
-		Node<T> * nouveau = new Node<T>(elem);
-		cursor->setLeftNode(nouveau);
-		size++;
-	}
-
-	void AddRightElementCursor(const T elem) {
-
-		Node<T> * nouveau = new Node<T>(elem);
-		cursor->setRightNode(nouveau);
-		size++;
-	}
-
+	/**
+	 * Put the cursor at his child to his left
+	 */
 	const void moveCursorLeft() {
 		cursor = cursor->getLeftNode();
 	}
 
+	/**
+	 * Put the cursor at his child to his right
+	 */
 	const void moveCursorRight() {
 		cursor = cursor->getRightNode();
 	}
 
+	/**
+	 * Put the cursor at the root of the tree
+	 */
 	const void moveCursorRoot() {
 		cursor = root;
 	}
 
 	
-
+	/**
+	 * return the number node
+	 */
 	int getSize() {
 		return size;
 	}
@@ -116,10 +95,6 @@ public:
 		this->nomFichier = nomFic;
 	}
 
-	void ShowTree(TypeNaviguation Type) {
-		
-
-	}
 	//The method to call where you must call saveRecursif
 	void save() {
 		ofstream stream;
@@ -130,7 +105,23 @@ public:
 	}
 
 private:
-	void ConstructRecursif(Noeud *&n, int level, string position, list<string> &list) {
+	
+	//Empty all the subTree by the node pass in argument
+	//It will clear all node below the one entered
+	void DestroyTreeRecursion(Node<T>* n) {
+
+		if (n->gauche != nullptr) {
+			EmptyTreeRecursion(n->gauche);
+		}
+		if (n->droite != nullptr) {
+			EmptyTreeRecursion(n->droite);
+		}
+
+		delete n;
+		
+	}
+
+	void ConstructRecursif(Node<T> *&n, int level, string position, list<string> &list) {
 
 		//Verify if the list is empty
 		if (!list.empty()) {
@@ -144,9 +135,10 @@ private:
 			//If it's root then 
 			if (level == listLevel && position == listPos) {
 
-				string listContent = list.pop_front().substring;
+				string listContent = list.pop_front();
 				n = new Noeud();
 				n->setElement(listContent);
+				size ++;
 
 				ConstructRecursif(n->leftNode, level + 1, "G", list);
 				ConstructRecursif(n->rightNode, level + 1, "D", list);
@@ -154,8 +146,8 @@ private:
 		}
 
 	}
-	//sauvegarder en naviguant en mode préfixe
-	void saveRecursif(Node * n, string direction, int level) {
+	//sauvegarder en naviguant en mode prï¿½fixe
+	void saveRecursif(Node<T> * n, string direction, int level) {
 		
 		
 		if (n != nullptr) {
