@@ -11,7 +11,15 @@ void JeuQuestion(Tree<string>& tree);
 void lireFichier(list<string> &listFichier);
 
 using namespace std;
-
+/**
+ * Program for the class of Structure de Données in c++
+ *
+ * The goal of the TP is to make a simple akinator type game in a search tree,
+ * The tree is realized using template class and list
+ *
+ * Author: Samuel Montambault
+ * Date: 5 december 2018
+ */
 int main() {
 	Tree<string>* tree = new Tree<string>();
 	list<string> * listFichier = new list<string>();
@@ -47,6 +55,12 @@ int main() {
 	return 0;
 }
 
+/**
+ * The function in which the game take place
+ * Each iteration, akinator naviguate throught the 
+ * the tree and ask the question, narrowing the range of response possible
+ *
+ */
 void JeuQuestion(Tree<string>& tree) {
 	bool isFinished = false;
 	tree.moveCursorRoot();
@@ -67,6 +81,7 @@ void JeuQuestion(Tree<string>& tree) {
 				}
 			}
 			else {
+				//will enter here if the present node is a response node
 				string response = tree.getCursorElement();
 				bool isTheAnswer = lireOouN("Trouvé c'est un " + response + "! Est-ce à quoi vous pensiez");
 
@@ -83,10 +98,12 @@ void JeuQuestion(Tree<string>& tree) {
 			}
 		}
 		else {
+			//if the cursor is actually nullptr 
 			cout << "je ne sais pas" << endl;
 			string newQuestion = lireString("Entrez une question pour m'aidez à le retrouver");
 			string newResponse = lireString("Entrez ce à quoi vous pensiez");
-
+			
+			//adding the new element
 			tree.AddElement(newQuestion, newResponse);
 			isFinished = true;
 

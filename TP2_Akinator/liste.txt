@@ -2,7 +2,9 @@
 1	L	Est-ce un moyen de transport?
 2	L	A-t-il des ailes?
 3	L	Es-ce un avion de combat?
-4	L	F-150
+4	L	Es-ce pour le transport de soldat?
+5	L	cargo bob
+5	R	F-150
 4	R	Avion
 3	R	Hélicoptère
 2	R	Canard

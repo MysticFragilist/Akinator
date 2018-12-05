@@ -49,8 +49,21 @@ public:
 		cursor = root;
 
 		//to fill
+		root = construireRecursif(original.root);
 
 	}
+	
+	Node<T>* construireRecursif(Node<T> *n) {
+		Node<T>* nouveau = nullptr;
+		if (n != nullptr) {
+			nouveau = new Node<T>();
+			nouveau->element = n->element;
+			nouveau->leftNode = construireRecursif(n->leftNode);
+			nouveau->rightNode = construireRecursif(n->rightNode);
+		}
+		return nouveau;
+	}
+
 	/**
 	* Construct the tree with the list
 	*/
@@ -176,6 +189,8 @@ private:
 	}
 
 	//Construct the tree as a recursive method from a list passed in parameter
+	//
+	//I know that the code use can't be used 
 	void ConstructRecursif(Node<T> *&n, int level, string position, list<string> &list){
  
 		//Verify if the list is empty
@@ -200,8 +215,8 @@ private:
 					root = n;
 				}
 
-				ConstructRecursif(n->leftNode, level + 1, "G", list);
-				ConstructRecursif(n->rightNode, level + 1, "D", list);
+				ConstructRecursif(n->leftNode, level + 1, "L", list);
+				ConstructRecursif(n->rightNode, level + 1, "R", list);
 			}
 		}
 
