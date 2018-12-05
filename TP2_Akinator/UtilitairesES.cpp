@@ -77,7 +77,7 @@ string lireString(const string& message) {
 
 	while (!valide) {
 		cout << message << ": ";
-		cin >> resp;
+		getline(cin, resp);
 		valide = true;
 		if (cin.fail()) {
 			cerr << "Vous devez entrer une string." << endl;

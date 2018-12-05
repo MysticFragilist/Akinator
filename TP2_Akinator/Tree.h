@@ -176,8 +176,8 @@ private:
 	}
 
 	//Construct the tree as a recursive method from a list passed in parameter
-	void ConstructRecursif(Node<T> *&n, int level, string position, list<string> &list) {
-
+	void ConstructRecursif(Node<T> *&n, int level, string position, list<string> &list){
+ 
 		//Verify if the list is empty
 		if (!list.empty()) {
 			T line = list.front();
@@ -210,16 +210,16 @@ private:
 	//sauvegarder en naviguant en mode prefixe
 	void saveRecursif(Node<T> * n, string direction, int level) {
 		
-		
 		if (n != nullptr) {
 			ofstream stream;
 			stream.open(nomFichier, ios::app);
-			stream << level << "\t" << direction << "\t" << n->getElement();
+			stream << level << "\t" << direction << "\t" << n->getElement() << endl;
+			
+			saveRecursif(n->leftNode, "L", level + 1);
+			saveRecursif(n->rightNode, "R", level + 1);
 		}
 
-		saveRecursif(n->leftNode, "L", level + 1);
-		saveRecursif(n->rightNode, "R", level + 1);
-
+		
 	}
 
 	Node<T>* cursor;

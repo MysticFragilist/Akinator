@@ -34,6 +34,7 @@ int main() {
 			JeuQuestion(*tree);
 			break;
 		case 2:
+			tree->setNomFichier("liste.txt");
 			tree->save();
 			return 0;
 			break;
@@ -105,7 +106,7 @@ void lireFichier(list<string> &listFichier) {
 		{
 			getline(fichier, ligne);
 			listFichier.push_back(ligne);
-			cout << ligne << endl;  // on l'affiche
+			
 		}
 
 		fichier.close();
