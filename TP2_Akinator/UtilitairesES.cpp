@@ -1,5 +1,5 @@
-#include "UtilitairesES.h"
 #include <iostream>
+#include "UtilitairesES.h"
 
 
 int lireEntier(const string& message, int limiteInferieure,
@@ -59,7 +59,9 @@ bool lireOouN(const string& message) {
 			cerr << "Vous devez entrer une O pour oui ou N pour non." << endl;
 			valide = false;
 		}
-		else 
+		else {
+			valide = true;
+		}
 		cin.clear();
 		cin.ignore(cin.rdbuf()->in_avail());
 	}
@@ -67,3 +69,29 @@ bool lireOouN(const string& message) {
 
 	return resp == "O";
 }
+
+
+string lireString(const string& message) {
+	string resp = "";
+	bool valide = false;
+
+	while (!valide) {
+		cout << message << ": ";
+		cin >> resp;
+		valide = true;
+		if (cin.fail()) {
+			cerr << "Vous devez entrer une string." << endl;
+			valide = false;
+		}
+		else {
+			valide = true;
+		}
+
+		cin.clear();
+		cin.ignore(cin.rdbuf()->in_avail());
+	}
+
+
+	return resp;
+}
+

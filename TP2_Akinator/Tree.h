@@ -8,7 +8,7 @@ class Tree {
 public:
 
 	/**
-	* An empty constructor which call the 
+	* An empty constructor
 	*/
 	Tree() {
 		root = cursor = nullptr;
@@ -25,12 +25,6 @@ public:
 		nomFichier = "";
 	}
 
-	Tree& operator=(const Tree& tree) {
-		tree.moveCursorRoot();
-		cursor = root;
-
-
-	}
 
 	/**
 	* A copied Constructor
@@ -39,23 +33,80 @@ public:
 		*this = p;
 	}
 
+	/**
+	* Destructor: empty the tree
+	*/
 	~Tree() {
-
+		DestroyTreeRecursion(root);
 	}
 
+	/**
+	* The operator= for the tree, copy each node and put them 
+	* accordingly.
+	*/
 	const Tree<T>& operator=(const Tree<T>& original) {
+		original.moveCursorRoot();
+		cursor = root;
 
+		//to fill
 
 	}
-
-	void Construct(list<T> list) {
+	/**
+	* Construct the tree with the list
+	*/
+	void Construct(list<T>& list) {
 		//start the recursion
 		ConstructRecursif(root, 0,"R", list);
 	}
 
+	/**
+	 * Add the element pass in parameter
+	 */
+	void AddElement(T question, T response) {
 
-	void AddElement(T element) {
-		
+		if (cursor == nullptr) {
+			
+			//find the last node
+			Node<T>* cursorPrec = root;
+			bool isFinished = false;
+
+			while (!isFinished) {
+				if (cursorPrec->rightNode == nullptr) {
+					isFinished = true;
+				}
+				else {
+					cursorPrec = cursorPrec->rightNode;
+				}
+			}
+			//cursorPrec contains now the preceding node of the cursor
+			Node<T> *nQuestion = new Node<T>(question);
+			Node<T> *nResponse = new Node<T>(response);
+
+			cursorPrec->setRightNode(nQuestion);
+			nQuestion->setLeftNode(nResponse);
+
+			if (root == nullptr) {
+				root = cursorPrec;
+			}
+		}
+		else {
+			Node<T> *oldResp = new Node<T>(cursor->getElement());
+			Node<T> *newResp = new Node<T>(response);
+			
+			cursor->setElement(question);
+
+			cursor->setLeftNode(newResp);
+			cursor->setRightNode(oldResp);
+		}
+	}
+
+	//The method to call where you must call saveRecursif
+	void save() {
+		ofstream stream;
+		stream.open(nomFichier, fstream::out);
+		stream.close();
+
+		saveRecursif(root, "R", 0);
 	}
 
 	/**
@@ -78,30 +129,37 @@ public:
 	const void moveCursorRoot() {
 		cursor = root;
 	}
-
 	
 	/**
-	 * return the number node
-	 */
-	int getSize() {
-		return size;
+	* get the T element of the cursor 
+	*/
+	const T getCursorElement() const {
+		return cursor->getElement();
 	}
-	
-	Node<T> getRoot() const {
-		return root;
+
+	/**
+	 * return true if the cursor is a leaf (a response)
+	 */
+	const bool isCursorLeaf() const {
+		return cursor->leftNode == nullptr && cursor->rightNode == nullptr;
+	}
+
+	/**
+	* return true if the cursor is valid
+	*/
+	const bool isCursorValid() const {
+		return cursor != nullptr;
+	}
+
+	/**
+	 * return the number of node present in the tree
+	 */
+	const int getSize() const {
+		return size;
 	}
 
 	void setNomFichier(string nomFic) {
 		this->nomFichier = nomFic;
-	}
-
-	//The method to call where you must call saveRecursif
-	void save() {
-		ofstream stream;
-		stream.open(nomFichier, fstream::out);
-		stream.close();
-
-		sauvegarderRecursif(root, "R", 0);
 	}
 
 private:
@@ -110,17 +168,14 @@ private:
 	//It will clear all node below the one entered
 	void DestroyTreeRecursion(Node<T>* n) {
 
-		if (n->gauche != nullptr) {
+		if (n != nullptr) {
 			EmptyTreeRecursion(n->gauche);
-		}
-		if (n->droite != nullptr) {
 			EmptyTreeRecursion(n->droite);
-		}
-
-		delete n;
-		
+			delete n;
+		}		
 	}
 
+	//Construct the tree as a recursive method from a list passed in parameter
 	void ConstructRecursif(Node<T> *&n, int level, string position, list<string> &list) {
 
 		//Verify if the list is empty
@@ -130,15 +185,20 @@ private:
 			//Initialiser les variables
 			int listLevel = stoi(line.substr(0, 1).c_str(), 0);
 			string listPos = line.substr(2, 1);
+			string listContent = line.substr(4, line.size() - 1);
 
-
-			//If it's root then 
+			//check whether it's the right one to insert from the list
 			if (level == listLevel && position == listPos) {
 
-				string listContent = list.pop_front();
-				n = new Noeud();
+				list.pop_front();
+				n = new Node<string>();
 				n->setElement(listContent);
 				size ++;
+
+				//If it's root then set it
+				if (root == nullptr) {
+					root = n;
+				}
 
 				ConstructRecursif(n->leftNode, level + 1, "G", list);
 				ConstructRecursif(n->rightNode, level + 1, "D", list);
@@ -146,7 +206,8 @@ private:
 		}
 
 	}
-	//sauvegarder en naviguant en mode pr�fixe
+
+	//sauvegarder en naviguant en mode prefixe
 	void saveRecursif(Node<T> * n, string direction, int level) {
 		
 		

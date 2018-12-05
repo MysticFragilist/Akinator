@@ -12,7 +12,7 @@ public:
 	{
 		rightNode = nullptr;
 		leftNode = nullptr;
-		this->m_item = NULL;
+		this->m_item = T();
 	}
 
 	Node(T m_item) {

@@ -35,4 +35,19 @@ int lireEntier(const string& message, int limiteInferieure,
 */
 float lireReel(const string& message, float limiteInferieure);
 
+/**
+* Permet de lire un caractère O ou N pour une question vrai ou faux
+*
+* Entrée: message Le message qui sera affiché à chaque lecture
+* Sortie: true if it's a yes false if it's a no
+*/
+bool lireOouN(const string& message);
+
+/**
+* Permet de lire un chaine de caractère à l'écran
+*
+* Entrée: message Le message qui sera affiché à chaque lecture
+* Sortie: string entrée
+*/
+string lireString(const string& message);
 #endif
